@@ -16,7 +16,7 @@
           <%= sanitize_markdown node.summary_html %>
         </div>
 
-        <% if node.name == '招聘' %>
+        <% if node.name == '活动' %>
           <hr />
           <ul class="nav nav-pills prefix-filter">
             <% cache "prefixes", expires_in: 7.days do %>

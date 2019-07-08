@@ -28,7 +28,7 @@
       user: "用户"
       topic: "话题"
       post: 文章
-      page: Wiki
+      page: 知识库
       device: "设备"
     attributes:
       user:
