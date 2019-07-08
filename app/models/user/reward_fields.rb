@@ -10,7 +10,7 @@ class User
 
       scoped_field :reward_fields, default: {}
 
-      REWARD_FIELDS = %i[alipay wechat]
+      REWARD_FIELDS = %i[alipay]
     end
 
     def reward_enabled?

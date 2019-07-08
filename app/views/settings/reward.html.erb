@@ -12,7 +12,7 @@
 
               <% User::REWARD_FIELDS.each do |field| %>
                 <div class="form-group form-group-reward-field-<%= field %>">
-                  <label><%= User.reward_field_label(field) %></label>
+                  <label>以太坊钱包</label>
                   <input class="form-control" type="file" name="user[rewards][<%= field %>]" id="user_reward_<%= field %>">
                   <p class="form-text">
                     <% if field == :alipay %>
