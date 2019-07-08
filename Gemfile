@@ -126,7 +126,7 @@ gem "homeland-jobs", "~> 0.3.0"
 gem "homeland-note", "~> 0.2.0"
 gem "homeland-press",  "~> 0.4.0"
 gem "homeland-site",  "~> 0.3.0"
-gem 'nestfans.com-wiki', '~> 0.4.2'
+gem 'nestfans-wiki', '~> 0.4.2'
 
 gem "bootsnap"
 

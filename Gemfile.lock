@@ -196,7 +196,7 @@ GEM
     homeland-site (0.3.0)
       form-select (>= 0.2.0)
       rails (~> 5)
-    nestfans.com-wiki (0.4.2)
+    nestfans-wiki (0.4.2)
       rails (~> 5)
     html-pipeline (2.9.1)
       activesupport (>= 2)
@@ -532,7 +532,7 @@ DEPENDENCIES
   homeland-note (~> 0.2.0)
   homeland-press (~> 0.4.0)
   homeland-site (~> 0.3.0)
-  nestfans.com-wiki (~> 0.4.2)
+  nestfans-wiki (~> 0.4.2)
   html-pipeline
   html-pipeline-rouge_filter
   http_accept_language
