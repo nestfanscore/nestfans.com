@@ -2,9 +2,7 @@ RUN  = docker-compose run app
 RAKE = docker-compose run app bundle exec rake
 
 docker\:build:
-	docker build . -t homeland/homeland:test
-docker\:buildprod:
-	docker build . -t nestfanscommunity/nestfans-homeland:latest
+	docker build . -t nestfanscommunity/nestfans-homeland:test
 docker\:stop:
 	docker-compose down
 docker\:start:
