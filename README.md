@@ -1,7 +1,5 @@
 <p align="center">
-  <img src="https://gethomeland.com/images/text-logo.svg" width="400" />
-  <p align="center">Open source discussion website.</p>
-  <p align="center">开源的论坛／社区网站系统，基于 <a href="https://ruby-china.org">Ruby China</a> 发展而来。</p>
+  <p align="center">Nestfans 爱好者社区论坛，基于 <a href="https://ruby-china.org">Ruby China</a> 发展而来。</p>
   <p align="center">
     <a href="https://travis-ci.org/ruby-china/homeland">
       <img src="https://travis-ci.org/ruby-china/homeland.svg?branch=master" />
