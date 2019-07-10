@@ -33,6 +33,7 @@
     attributes:
       user:
         name: "昵称"
+        name_placeholder: "昵称 (可随时修改)"
         login: "用户名"
         email: "Email"
         email_placeholder: "Email（可用于找回密码）"
