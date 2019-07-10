@@ -38,10 +38,12 @@ class User
     end
 
     def update_profile_fields(field_values)
-      val = profile_fields || []
-      field_values.each do |key, value|
-        next unless PROFILE_FIELDS.include?(key.to_sym)
-        val[key.to_sym] = value
+      val = profile_fields
+      if !field_values.blank?
+        field_values.each do |key, value|
+          next unless PROFILE_FIELDS.include?(key.to_sym)
+          val[key.to_sym] = value
+        end
       end
       self.profile_fields = val
     end
