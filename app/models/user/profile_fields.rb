@@ -38,7 +38,7 @@ class User
     end
 
     def update_profile_fields(field_values)
-      val = profile_fields
+      val = profile_fields || {}
       field_values.each do |key, value|
         next unless PROFILE_FIELDS.include?(key.to_sym)
         val[key.to_sym] = value
