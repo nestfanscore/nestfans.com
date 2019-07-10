@@ -91,7 +91,7 @@ class SettingsController < ApplicationController
     end
 
     def update_reward
-      reward_fields = params[:user][:rewards] || {}
+      reward_fields = params[:user] && params[:user][:rewards] || {}
 
       res = {}
       reward_fields.each do |key, value|
