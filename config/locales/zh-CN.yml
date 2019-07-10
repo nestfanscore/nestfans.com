@@ -32,9 +32,10 @@
       device: "设备"
     attributes:
       user:
-        name: "名字"
+        name: "昵称"
         login: "用户名"
         email: "Email"
+        email_placeholder: "Email（可用于找回密码）"
         email_public: "公开 Email"
         avatar: "头像"
         location: "城市"

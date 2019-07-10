@@ -19,6 +19,7 @@
     bind_another_account: "绑定其他帐号用于登录"
     register_user: "注册新用户"
     login: "用户名"
+    login_placeholder: "用户名（唯一且只能设置一次）"
     suggest_using_twitter_id: "谨慎填写，以后不可修改，建议用 Twitter ID。"
     already_have_account: "已经有帐号了？"
     forget_password: "忘记了密码?"
