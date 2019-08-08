@@ -18,6 +18,15 @@
 
 <%= raw Setting.topic_index_sidebar_html %>
 
+<div class="card">
+  <div class="card-header">友情社区</div>
+  <ul class="list-group list-group-flush" style="text-align: center;">
+    <li class="list-group-item"><a href="https://dapp.review/explore/eth" title="DappReview" target="_blank" rel="nofollow"><img src="https://nestfanshk.oss-cn-hongkong.aliyuncs.com/nestfans/dappreview.png" style="width:150px; " /></a></li>
+    <li class="list-group-item"><a href="https://etherscan.io/token/0x04abeda201850ac0124161f037efd70c74ddc74c" title="etherscan" target="_blank" rel="nofollow"><img src="https://nestfanshk.oss-cn-hongkong.aliyuncs.com/nestfans/etherscan.png" style="width: 150px;" /></a></li>
+    <li class="list-group-item"><a href="https://www.chainnode.com/forum/300" title="链节点" target="_blank" rel="nofollow"><img src="https://nestfanshk.oss-cn-hongkong.aliyuncs.com/nestfans/%E9%93%BE%E8%8A%82%E7%82%B9.png" style="width: 150px;" /></a></li>
+  </ul>
+</div>
+
 <% cache(["sidebar_statistics",Time.now.strftime("%Y-%m-%d %H")]) do %>
 <div class="card">
   <div class="card-header"><%= t("common.statics")%></div>
