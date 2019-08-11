@@ -48,7 +48,8 @@
         tagline: "签名"
         state: "状态"
         verified: "信任用户"
-        company: "公司"
+        company: "以太坊地址"
+        company_placeholder: "以太坊钱包地址（可参与社区活动获取奖励）"
         github: "GitHub"
         remember_me: 记住登陆状态
         current_password: 旧密码
