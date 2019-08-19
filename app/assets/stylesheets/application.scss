@@ -578,3 +578,17 @@ img.emoji { width:20px; height:20px; }
     li.next { float: right; }
   }
 }
+
+.email-code-btn-outline {
+  color: #fff;
+  background-color: crimson;
+  width: 120px;
+}
+
+.email-code-btn-outline:disabled {
+  background-color: darkgray;
+}
+
+.email-code-btn-outline:hover {
+  color: #fff;
+}

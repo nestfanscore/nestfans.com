@@ -6,4 +6,10 @@ class UserMailer < BaseMailer
     return false if @user.blank?
     mail(to: @user.email, subject: t("mail.welcome_subject", app_name: Setting.app_name).to_s)
   end
+
+  def verification_code(email)
+    @user = User.find_by_id(user_id)
+    return false if email.blank?
+    mail(to: email, subject: t("mail.welcome_subject", app_name: Setting.app_name).to_s)
+  end
 end

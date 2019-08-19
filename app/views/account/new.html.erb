@@ -22,6 +22,14 @@
           </label>
         </div>
         <div class="form-group">
+          <div class="input-group mb-3">
+            <input name="_email_verification_code" type="text" class="form-control" placeholder=<%= t("email_verification_code.placeholder") %> aria-label=<%= t("email_verification_code.placeholder") %> aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn email-code-btn-outline" type="button"><%= t("email_verification_code.lable") %></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
           <%= f.text_field :company, class: "form-control input-lg", placeholder: t("activerecord.attributes.user.company_placeholder") %>
         </div>
         <div class="form-group">

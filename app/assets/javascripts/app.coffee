@@ -44,6 +44,7 @@ AppView = Backbone.View.extend
     "click a.button-follow-user": "followUser"
     "click a.button-block-node": "blockNode"
     "click a.rucaptcha-image-box": "reLoadRucaptchaImage"
+    "click .email-code-btn-outline": "sendEmailCode"
 
   initialize: ->
     FormStorage.restore()
@@ -266,6 +267,40 @@ AppView = Backbone.View.extend
     currentSrc = img.attr('src')
     img.attr('src', currentSrc.split('?')[0] + '?' + (new Date()).getTime())
     return false
+
+  sendEmailCode: (e) ->
+    $('#new_user .alert').remove()
+    email = $('#user_email').val()
+    pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+    # domains = ["126.com", "foxmail.com", "qq.com", "163.com","vip.163.com","263.net","yeah.net","sohu.com","sina.cn","sina.com","eyou.com","gmail.com","hotmail.com","42du.cn"]
+
+    if pattern.test(email) == false
+      $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址:<\/strong><\/div><\/div>\n"
+      return
+
+    $.post "/account/email",
+      email: email
+
+    downTime = 60
+    btn = $(e.currentTarget)
+    textBackup = btn.text()
+    addDownText = (downTime) ->
+      btn.text downTime + ' 秒后重试'
+      return
+
+    btn.attr 'disabled', true
+    addDownText downTime
+
+    interval = setInterval((->
+      if downTime == 0
+        clearInterval interval
+        btn.attr 'disabled', false
+        btn.text textBackup
+      else
+        downTime = downTime - 1
+        addDownText downTime
+      return
+    ), 1000)
 
   updateWindowActiveState: (e) ->
     prevType = $(this).data("prevType")
