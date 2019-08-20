@@ -275,10 +275,10 @@ AppView = Backbone.View.extend
     # domains = ["126.com", "foxmail.com", "qq.com", "163.com","vip.163.com","263.net","yeah.net","sohu.com","sina.cn","sina.com","eyou.com","gmail.com","hotmail.com","42du.cn"]
 
     if pattern.test(email) == false
-      $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址:<\/strong><\/div><\/div>\n"
+      $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址<\/strong><\/div><\/div>\n"
       return
 
-    $.post "/account/email",
+    $.post "/application/send_email_verification_code",
       email: email
 
     downTime = 60

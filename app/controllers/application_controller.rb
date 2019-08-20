@@ -147,6 +147,29 @@ class ApplicationController < ActionController::Base
     redirect_to auth_sso_path if Setting.sso_enabled?
   end
 
+  def send_email_verification_code
+    email = params[:email]
+    # TODO: vaild email address
+    ip = request.remote_ip
+    limit_key = "limit:send-email-verification-code:#{ip}"
+
+    cnt = $redis.incr(limit_key)
+    if cnt == 1
+      $redis.setex(limit_key, 60, 1)
+    end
+
+    if cnt > 2
+      return render status: 403, plain: "别发了"
+    end
+
+    code_key = "user-email-verification-code:#{email}"
+    rand_code = rand(123456..999999).to_s
+    $redis.setex(code_key, 180, rand_code)
+
+    UserMailer.verification_code(email, rand_code).deliver_now
+    return render status: 200, plain: "邮件验证码已发送，请查收"
+  end
+
   private
 
     def user_locale

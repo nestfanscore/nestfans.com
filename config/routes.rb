@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: "auth/omniauth_callbacks"
   }
 
+  post "application/send_email_verification_code", to: "application#send_email_verification_code"
+
   resource :setting do
     member do
       get :account

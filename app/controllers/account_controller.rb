@@ -24,9 +24,20 @@ class AccountController < Devise::RegistrationsController
       return render status: 403, plain: message
     end
 
+    email = params[resource_name][:email]
+    email_verification_code = params[:_email_verification_code]
+    code_key = "user-email-verification-code:#{email}"
+    correct_verification_code = $redis.get(code_key)
+
+    if email_verification_code != correct_verification_code
+      message = "邮箱验证码错误 #{email_verification_code} correct: #{correct_verification_code} #{code_key}"
+      logger.warn message
+      return render status: 200, js: "$('#new_user .alert').remove();\n$('#new_user').prepend('  <div class=\"alert alert-block alert-danger\"><a class=\"close\" data-dismiss=\"alert\" href=\"#\">×<\/a><div><strong>有 1 处问题导致无法提交:<\/strong><\/div><ul><li>邮箱验证码不正确<\/li><\/ul><\/div>');"
+    end
+
     build_resource(sign_up_params)
     resource.login = params[resource_name][:login]
-    resource.email = params[resource_name][:email]
+    resource.email = email
     if verify_complex_captcha?(resource) && resource.save
       Rails.cache.write(cache_key, sign_up_count + 1)
 

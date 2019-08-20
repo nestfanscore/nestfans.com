@@ -7,9 +7,12 @@ class UserMailer < BaseMailer
     mail(to: @user.email, subject: t("mail.welcome_subject", app_name: Setting.app_name).to_s)
   end
 
-  def verification_code(email)
-    @user = User.find_by_id(user_id)
-    return false if email.blank?
-    mail(to: email, subject: t("mail.welcome_subject", app_name: Setting.app_name).to_s)
+  def verification_code(email, code)
+    @code = code
+    return false if email.blank? || @code.blank?
+
+    timeNow = Time.new
+    @localTime = timeNow.strftime("%Y-%m-%d %H:%M:%S")
+    mail(to: email, subject: "注册验证码 - #{Setting.app_name}")
   end
 end
