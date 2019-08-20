@@ -11,8 +11,6 @@ class UserMailer < BaseMailer
     @code = code
     return false if email.blank? || @code.blank?
 
-    timeNow = Time.new
-    @localTime = timeNow.strftime("%Y-%m-%d %H:%M:%S")
     mail(to: email, subject: "注册验证码 - #{Setting.app_name}")
   end
 end
