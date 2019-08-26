@@ -14,9 +14,65 @@
 
 Please visit https://gethomeland.com get more documents.
 
-## Release Notes
+## 开发
 
-Please visit [Releases](https://github.com/ruby-china/homeland/releases) page.
+基于 Docker 开发环境，开发环境配置文件
+
+```
+Dockerfile.dev
+Gemfile.dev
+Gemfile.lock.dev
+```
+
+具体查看 Dockerfile.dev
+
+```shell
+# 1. 安装 Docker，启动 Docker
+# 2. 本项目根目录执行构建 dev image 命令
+make docker:build:dev
+
+# 3. 获取 nestfans.com-docker
+git clone https://github.com/nestfanscore/nestfans.com-docker.git
+cd nestfans.com-docker/
+
+# 4. 启动
+make start
+
+# 5. 调试和重启 重复第 2 步
+make docker:build:dev
+make restart
+```
+
+### 插件调试
+
+将插件放在 plugins 目录，修改 `Gemfile.dev`，例如
+
+```
+gem 'nestfans-press', path: './plugins/nestfans-press'
+```
+
+修改 `Gemfile.lock.dev`，移除原有 Gem 下面的包
+
+```
+PATH
+  remote: ./plugins/nestfans-press
+  specs:
+    homeland-press (0.4.1)
+      rails
+
+DEPENDENCIES
+  homeland-press!
+```
+
+`Dockerfile.dev` 会自动把 plugins 目录下的插件打到 image 里
+
+然后按照上方开发调试流程
+
+## 部署
+
+参考上方开发流程，第二步的 `make Docker:build:dev` 改为 `make Docker:build` 即可
+
+其他配置参考 https://gethomeland.com/docs/
 
 ## Contribute Guide
 

@@ -3,6 +3,8 @@ RAKE = docker-compose run app bundle exec rake
 
 docker\:build:
 	docker build . -t nestfanscommunity/nestfans-homeland:latest
+docker\:build\:dev:
+	docker build . -f Dockerfile.dev -t nestfanscommunity/nestfans-homeland:latest
 docker\:stop:
 	docker-compose down
 docker\:start:
