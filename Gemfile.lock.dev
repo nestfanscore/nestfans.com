@@ -1,3 +1,9 @@
+PATH
+  remote: ./plugins/nestfans-press
+  specs:
+    homeland-press (0.4.1)
+      rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -528,6 +534,7 @@ DEPENDENCIES
   hiredis
   homeland-jobs (~> 0.3.0)
   homeland-note (~> 0.2.0)
+  homeland-press!
   homeland-site (~> 0.3.0)
   homeland-wiki (~> 0.4.0)
   html-pipeline
