@@ -20,12 +20,19 @@ RUN mkdir -p /home/app &&\
 		find / -type f -iname '*.apk-new' -delete &&\
 		rm -rf '/var/cache/apk/*' '/tmp/*'
 
-ADD . /home/app/homeland
-ADD Gemfile.dev  /home/app/homeland/Gemfile
-ADD Gemfile.lock.dev /home/app/homeland/Gemfile.lock
+ADD Gemfile Gemfile.lock /home/app/homeland/
 RUN bundle config mirror.https://rubygems.org https://gems.ruby-china.com
-RUN bundle install --deployment --jobs 20 --retry 5 &&\
-	  find /home/app/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
+RUN bundle install --deployment --jobs 20 --retry 5
+ADD . /home/app/homeland
+
+# Debug local plugins
+WORKDIR /home/app/homeland/plugins/nestfans-press
+RUN gem build homeland-press.gemspec
+WORKDIR /home/app/homeland
+RUN ls ./plugins/nestfans-press/
+RUN gem install ./plugins/nestfans-press/homeland-press-0.4.1.gem
+
+RUN find /home/app/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
 ADD ./config/nginx/ /etc/nginx
 
 RUN rm -Rf /home/app/homeland/vendor/cache &&\
@@ -33,5 +40,3 @@ RUN rm -Rf /home/app/homeland/vendor/cache &&\
 
 
 RUN bundle exec rails assets:precompile RAILS_ENV=production SECRET_KEY_BASE=fake_secure_for_compile
-
-
