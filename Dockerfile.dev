@@ -20,11 +20,13 @@ RUN mkdir -p /home/app &&\
 		find / -type f -iname '*.apk-new' -delete &&\
 		rm -rf '/var/cache/apk/*' '/tmp/*'
 
-ADD . /home/app/homeland
 ADD Gemfile  /home/app/homeland/Gemfile
 ADD Gemfile.lock /home/app/homeland/Gemfile.lock
 RUN bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 RUN bundle install --deployment --jobs 20 --retry 5
+
+# install local plugins
+ADD . /home/app/homeland
 ADD Gemfile.dev  /home/app/homeland/Gemfile
 ADD Gemfile.lock.dev /home/app/homeland/Gemfile.lock
 RUN bundle install --deployment --local --jobs 20 --retry 5 &&\
@@ -33,7 +35,6 @@ ADD ./config/nginx/ /etc/nginx
 
 RUN rm -Rf /home/app/homeland/vendor/cache &&\
     chown -R nginx:nginx /home/app
-
 
 RUN bundle exec rails assets:precompile RAILS_ENV=production SECRET_KEY_BASE=fake_secure_for_compile
 
