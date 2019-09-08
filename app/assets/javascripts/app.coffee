@@ -26,6 +26,7 @@
 #= require toc
 #= require turbolinks
 #= require google_analytics
+#= require gt
 #= require jquery.infinitescroll.min
 #= require d3.min
 #= require cal-heatmap.min
