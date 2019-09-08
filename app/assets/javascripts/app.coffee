@@ -45,7 +45,7 @@ AppView = Backbone.View.extend
     "click a.button-follow-user": "followUser"
     "click a.button-block-node": "blockNode"
     "click a.rucaptcha-image-box": "reLoadRucaptchaImage"
-    "click .email-code-btn-outline": "sendEmailCode"
+    # "click .email-code-btn-outline": "sendEmailCode"
 
   initialize: ->
     FormStorage.restore()
@@ -55,6 +55,7 @@ AppView = Backbone.View.extend
     @initInfiniteScroll()
     @initCable()
     @restoreHeaderSearchBox()
+    @initGtSdk()
 
     if $('body').data('controller-name') in ['topics', 'replies']
       window._topicView = new TopicView({parentView: @})
@@ -269,7 +270,7 @@ AppView = Backbone.View.extend
     img.attr('src', currentSrc.split('?')[0] + '?' + (new Date()).getTime())
     return false
 
-  sendEmailCode: (e) ->
+  sendEmailCode: () ->
     $('#new_user .alert').remove()
     email = $('#user_email').val()
     pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
@@ -283,7 +284,7 @@ AppView = Backbone.View.extend
       email: email
 
     downTime = 60
-    btn = $(e.currentTarget)
+    btn = $('#send-email-code-btn')
     textBackup = btn.text()
     addDownText = (downTime) ->
       btn.text downTime + ' 秒后重试'
@@ -302,6 +303,90 @@ AppView = Backbone.View.extend
         addDownText downTime
       return
     ), 1000)
+
+  gtHandler: (captchaObj) ->
+    captchaObj.onReady(->
+      $('#wait').hide()
+      return
+    ).onSuccess ->
+      result = captchaObj.getValidate()
+      if !result
+        return alert('请完成验证')
+      $.ajax
+        url: 'http://localhost:9989/gt/validate'
+        type: 'POST'
+        dataType: 'json'
+        data:
+          geetest_challenge: result.geetest_challenge
+          geetest_validate: result.geetest_validate
+          geetest_seccode: result.geetest_seccode
+        success: (data) ->
+          if data.status == 'success'
+              $('#new_user .alert').remove()
+              email = $('#user_email').val()
+              pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+              # domains = ["126.com", "foxmail.com", "qq.com", "163.com","vip.163.com","263.net","yeah.net","sohu.com","sina.cn","sina.com","eyou.com","gmail.com","hotmail.com","42du.cn"]
+
+              if pattern.test(email) == false
+                $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址<\/strong><\/div><\/div>\n"
+                return
+
+              $.post "/application/send_email_verification_code",
+                email: email
+
+              downTime = 60
+              btn = $('#send-email-code-btn')
+              textBackup = btn.text()
+              addDownText = (downTime) ->
+                btn.text downTime + ' 秒后重试'
+                return
+
+              
+              btn.attr 'disabled', true
+              addDownText downTime
+
+              interval = setInterval((->
+                if downTime == 0
+                  clearInterval interval
+                  btn.attr 'disabled', false
+                  btn.text textBackup
+                else
+                  downTime = downTime - 1
+                  addDownText downTime
+                return
+              ), 1000)
+          else if data.status == 'fail'
+            setTimeout (->
+              captchaObj.reset()
+              return
+            ), 1500
+          return
+      return
+    $('.email-code-btn-outline').click ->
+      captchaObj.verify()
+      return
+    # 更多前端接口说明请参见：http://docs.geetest.com/install/client/web-front/
+    return
+
+  initGtSdk: ->
+    gtHandler = @gtHandler
+    $.ajax
+      url: 'http://localhost:9989/gt/preprocess?t=' + (new Date).getTime()
+      type: 'get'
+      dataType: 'json'
+      success: (data) ->
+        console.log data
+        initGeetest {
+          gt: data.gt
+          challenge: data.challenge
+          new_captcha: data.new_captcha
+          offline: !data.success
+          product: 'bind'
+          timeout: '3000'
+          width: '300px'
+          https: true
+        }, gtHandler
+        return
 
   updateWindowActiveState: (e) ->
     prevType = $(this).data("prevType")
