@@ -312,25 +312,19 @@ AppView = Backbone.View.extend
       result = captchaObj.getValidate()
       if !result
         return alert('请完成验证')
+      email = $('#user_email').val()
       $.ajax
-        url: 'http://localhost:9989/gt/validate'
+        url: '/geetest/validate'
         type: 'POST'
         dataType: 'json'
         data:
           geetest_challenge: result.geetest_challenge
           geetest_validate: result.geetest_validate
           geetest_seccode: result.geetest_seccode
+          geetest_key: email
         success: (data) ->
           if data.status == 'success'
-              $('#new_user .alert').remove()
-              email = $('#user_email').val()
-              pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
-              # domains = ["126.com", "foxmail.com", "qq.com", "163.com","vip.163.com","263.net","yeah.net","sohu.com","sina.cn","sina.com","eyou.com","gmail.com","hotmail.com","42du.cn"]
-
-              if pattern.test(email) == false
-                $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址<\/strong><\/div><\/div>\n"
-                return
-
+              console.log email
               $.post "/application/send_email_verification_code",
                 email: email
 
@@ -363,6 +357,14 @@ AppView = Backbone.View.extend
           return
       return
     $('.email-code-btn-outline').click ->
+      $('#new_user .alert').remove()
+      email = $('#user_email').val()
+      pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+      # domains = ["126.com", "foxmail.com", "qq.com", "163.com","vip.163.com","263.net","yeah.net","sohu.com","sina.cn","sina.com","eyou.com","gmail.com","hotmail.com","42du.cn"]
+
+      if pattern.test(email) == false
+        $('#new_user').prepend "<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址<\/strong><\/div><\/div>\n"
+        return
       captchaObj.verify()
       return
     # 更多前端接口说明请参见：http://docs.geetest.com/install/client/web-front/
@@ -371,7 +373,7 @@ AppView = Backbone.View.extend
   initGtSdk: ->
     gtHandler = @gtHandler
     $.ajax
-      url: 'http://localhost:9989/gt/preprocess?t=' + (new Date).getTime()
+      url: '/geetest/preprocess?t=' + (new Date).getTime()
       type: 'get'
       dataType: 'json'
       success: (data) ->

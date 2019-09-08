@@ -149,6 +149,13 @@ class ApplicationController < ActionController::Base
 
   def send_email_verification_code
     email = params[:email]
+
+    vaild_key = "geetest:validate:email:#{email}"
+    validate = $redis.get(vaild_key)
+    if validate != "validate"
+      return render status: 403, plain: "别调皮，请先完成验证"
+    end
+
     # TODO: vaild email address
     ip = request.remote_ip
     limit_key = "limit:send-email-verification-code:#{ip}"
