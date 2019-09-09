@@ -21,6 +21,7 @@
     <td>Email</td>
     <td>钱包</td>
     <td>注册时间</td>
+    <td>注册 IP</td>
     <td>操作</td>
   </tr>
 
@@ -31,7 +32,8 @@
     <td><%= user.name %></td>
     <td><%= user.email %></td>
     <td><%= user.company %></td>
-    <td><%= user.created_at.to_date %></td>
+    <td><%= user.created_at %></td>
+    <td><%= user.current_sign_in_ip %></td>
     <td>
       <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-pencil" %>
     </td>
