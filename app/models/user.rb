@@ -42,7 +42,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :name, length: { maximum: 20 }
 
-  after_commit :send_welcome_mail, on: :create
+  # after_commit :send_welcome_mail, on: :create
 
   scope :hot, -> { order(replies_count: :desc).order(topics_count: :desc) }
   scope :without_team, -> { where(type: nil) }
