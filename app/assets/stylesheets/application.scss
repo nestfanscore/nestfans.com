@@ -10,8 +10,6 @@
 @import "vars";
 @import "bootstrap";
 
-$primary: orange;
-
 @mixin clearfix() {
   &:before,
   &:after {
@@ -149,7 +147,7 @@ body {
       a:hover,
       a.active,
       a.active:focus,
-      a.active:hover { color: $red; background: transparent; border-bottom-color: $red; }
+      a.active:hover { color: $orange; background: transparent; border-bottom-color: $orange; }
     }
   }
 
