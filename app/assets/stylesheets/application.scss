@@ -579,6 +579,8 @@ img.emoji { width:20px; height:20px; }
   }
 }
 
+// NOTE: my style
+
 .email-code-btn-outline {
   color: #fff;
   background-color: crimson;
@@ -592,3 +594,39 @@ img.emoji { width:20px; height:20px; }
 .email-code-btn-outline:hover {
   color: #fff;
 }
+
+$deeporange: #f29d38;
+.btn-primary {
+  background-color: $orange !important;
+  border-color: $orange !important;
+
+  &:hover {
+    background-color: $deeporange !important;
+    border-color: $deeporange !important;
+  }
+
+  &:focus {
+    background-color: $deeporange !important;
+    border-color: $deeporange !important;
+  }
+
+  &:active {
+    background-color: $deeporange !important;
+    border-color: $deeporange !important;
+  }
+}
+
+input {
+  &:focus {
+    border: 1px solid orange !important;
+    outline: none !important;
+  }
+}
+
+.form-control {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+
