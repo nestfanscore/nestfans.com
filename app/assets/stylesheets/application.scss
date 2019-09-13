@@ -307,7 +307,7 @@ body {
   li>a:hover { color: #555; background: $gray; }
 
   li.active>a,
-  li.active>a:hover { background-color: $blue !important; border-color: $blue !important; color: #FFF !important; }
+  li.active>a:hover { background-color: $orange !important; border-color: $orange !important; color: #FFF !important; }
 }
 .pager {
   margin: 0px;
@@ -608,11 +608,13 @@ $deeporange: #f29d38;
   &:focus {
     background-color: $deeporange !important;
     border-color: $deeporange !important;
+    box-shadow: none !important;
   }
 
   &:active {
     background-color: $deeporange !important;
     border-color: $deeporange !important;
+    box-shadow: none !important;
   }
 }
 
@@ -625,6 +627,7 @@ input {
 
 .form-control {
   &:focus {
+    border-color: orange !important;
     box-shadow: none !important;
   }
 }
