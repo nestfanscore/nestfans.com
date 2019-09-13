@@ -632,4 +632,20 @@ input {
   }
 }
 
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #404040;
+  background-color: #fff;
+  border: none !important;
+
+  &:focus {
+    border-color: orange !important;
+    box-shadow: none !important;
+  }
+}
+
 
