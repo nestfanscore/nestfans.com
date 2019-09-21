@@ -13,7 +13,7 @@ class User < ApplicationRecord
   ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{LOGIN_FORMAT}]+\z/
 
   ACCESSABLE_ATTRS = %i[name email_public location company bio website github twitter tagline avatar by
-                        current_password password password_confirmation _rucaptcha]
+                        current_password password password_confirmation _rucaptcha invite_code invite_by]
 
   devise :database_authenticatable, :registerable, :recoverable, :lockable,
          :rememberable, :trackable, :validatable, :omniauthable
@@ -49,11 +49,15 @@ class User < ApplicationRecord
   scope :fields_for_list, lambda {
     select(:type, :id, :name, :login, :email, :email_md5, :email_public,
            :avatar, :verified, :state, :tagline, :github, :website, :location,
-           :location_id, :twitter, :team_users_count, :created_at, :updated_at)
+           :location_id, :twitter, :team_users_count, :created_at, :updated_at, :invite_code, :invite_by)
   }
 
   def self.find_by_email(email)
     fetch_by_uniq_keys(email: email)
+  end
+
+  def self.find_by_invite_code(code)
+    fetch_by_uniq_keys(invite_code: code)
   end
 
   def self.find_by_login!(slug)

@@ -372,6 +372,8 @@ ActiveRecord::Schema.define(version: 2018_09_12_075805) do
     t.integer "team_users_count"
     t.integer "followers_count", default: 0
     t.integer "following_count", default: 0
+    t.string "invite_code"
+    t.string "invite_by"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["email"], name: "index_users_on_email"
