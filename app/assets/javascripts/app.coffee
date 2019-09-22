@@ -402,12 +402,9 @@ AppView = Backbone.View.extend
 
     location = window.location
     if location.pathname == "/account/sign_up"
-
-      console.log location
       invite_code = getUrlParam("invite")
 
       if invite_code
-        console.log invite_code
         $('#user_invite_by').val(invite_code)
 
   updateWindowActiveState: (e) ->

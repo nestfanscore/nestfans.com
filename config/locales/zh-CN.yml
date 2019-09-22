@@ -48,6 +48,7 @@
         password_confirmation: "确认密码"
         invite_code: "邀请码"
         invite_by: "邀请人"
+        invite_by_lable: "邀请码（选填）"
         website: "个人主页"
         last_logined_at: "上次登录时间"
         tagline: "签名"
