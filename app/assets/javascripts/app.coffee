@@ -56,6 +56,7 @@ AppView = Backbone.View.extend
     @initCable()
     @restoreHeaderSearchBox()
     @initGtSdk()
+    @initInvite()
 
     if $('body').data('controller-name') in ['topics', 'replies']
       window._topicView = new TopicView({parentView: @})
@@ -389,6 +390,25 @@ AppView = Backbone.View.extend
           https: true
         }, gtHandler
         return
+  
+  initInvite: ->
+    getUrlParam = (name) ->
+      reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+      r = window.location.search.substr(1).match(reg)
+
+      if r != null
+        return unescape(r[2])
+      null
+
+    location = window.location
+    if location.pathname == "/account/sign_up"
+
+      console.log location
+      invite_code = getUrlParam("invite")
+
+      if invite_code
+        console.log invite_code
+        $('#user_invite_by').val(invite_code)
 
   updateWindowActiveState: (e) ->
     prevType = $(this).data("prevType")
