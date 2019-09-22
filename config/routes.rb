@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get :password
       get :profile
       get :reward
+      get :invite
     end
   end
 

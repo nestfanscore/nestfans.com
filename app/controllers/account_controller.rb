@@ -35,6 +35,8 @@ class AccountController < Devise::RegistrationsController
       return render status: 200, js: "$('#new_user .alert').remove();\n$('#new_user').prepend('  <div class=\"alert alert-block alert-danger\"><a class=\"close\" data-dismiss=\"alert\" href=\"#\">×<\/a><div><strong>有 1 处问题导致无法提交:<\/strong><\/div><ul><li>邮箱验证码不正确<\/li><\/ul><\/div>');"
     end
 
+    params[resource_name][:invite_code] = User.gen_invite_code()
+
     build_resource(sign_up_params)
     resource.login = params[resource_name][:login]
     resource.email = email

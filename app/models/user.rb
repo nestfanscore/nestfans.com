@@ -102,6 +102,16 @@ class User < ApplicationRecord
     users.first(limit)
   end
 
+  def self.gen_invite_code
+    random_code = SecureRandom.hex(6)
+    check_code = fetch_by_uniq_keys(invite_code: random_code)
+    if check_code.blank?
+      return random_code
+    else
+      return self.gen_invite_code()
+    end
+  end
+
   def to_param
     login
   end
@@ -117,21 +127,6 @@ class User < ApplicationRecord
   def email=(val)
     self.email_md5 = Digest::MD5.hexdigest(val || "")
     self[:email] = val
-  end
-
-  def gen_invite_code
-    random_code = SecureRandom.hex(6)
-    check_code = fetch_by_uniq_keys(invite_code: random_code)
-    if check_code.blank?
-      return random_code
-    else
-      gen_invite_code()
-    end
-  end
-
-  def invite_code
-    random_code = gen_invite_code()
-    self[:invite_code] = random_code
   end
 
   def password_required?
