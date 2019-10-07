@@ -103,8 +103,8 @@ class User < ApplicationRecord
   end
 
   def self.gen_invite_code
-    random_code = SecureRandom.hex(6)
-    check_code = fetch_by_uniq_keys(invite_code: random_code)
+    random_code = SecureRandom.hex(5).downcase
+    check_code = User.find_by(invite_code: random_code)
     if check_code.blank?
       return random_code
     else

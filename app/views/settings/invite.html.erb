@@ -2,18 +2,39 @@
   <%= render 'menu' %>
 
   <div class="col-md-10">
+  <div class="card">
+    <div class="card-body">
+      <div class="heading">邀请码</div>
+    </div>
+  </div>
     <div class="row justify-content-between">
       <div class="col-md-6" style="border-radius: 5px; background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"> 
         <h3>邀请码</h3>
-        <p>12345</p>
+        <p><%= @user.invite_code %></p>
         <h3>邀请链接</h3>
-        <p>https://www.nestfans.com/account/sign_up?invite=12345</p>
+        <p>https://www.nestfans.com/account/sign_up?invite=<%= @user.invite_code %></p>
       </div>
       <div class="col-md-3" style="border-radius: 5px; background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);">
         <h3>累计邀请</h3>
-        <p>99 人</p>
+        <p><%= @invitedCount %> 人</p>
       </div>
     </div>
+
+    <table class="table table-bordered table-striped table-condensed">
+      <tr class="head">
+        <td>帐号</td>
+        <td>Email</td>
+        <td>注册时间</td>
+      </tr>
+      <% @invitedUsers.each do |iuser| %>
+        <tr>
+          <td><%= iuser.login %></td>
+          <td><%= iuser.email %></td>
+          <td><%= iuser.current_sign_in_at %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= paginate @invitedUsers %>
   </div>
 
 </div>

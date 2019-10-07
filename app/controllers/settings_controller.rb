@@ -20,6 +20,11 @@ class SettingsController < ApplicationController
   def reward
   end
 
+  def invite
+    @invitedUsers = User.where(invite_by: @user.invite_code).order(current_sign_in_at: :desc).page(params[:page]).per(10)
+    @invitedCount = User.where(invite_by: @user.invite_code).count 
+  end
+
   def update
     case params[:by]
     when "password"
