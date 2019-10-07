@@ -2,39 +2,42 @@
   <%= render 'menu' %>
 
   <div class="col-md-10">
-  <div class="card">
-    <div class="card-body">
-      <div class="heading">邀请码</div>
-    </div>
-  </div>
-    <div class="row justify-content-between">
-      <div class="col-md-6" style="border-radius: 5px; background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"> 
-        <h3>邀请码</h3>
-        <p><%= @user.invite_code %></p>
-        <h3>邀请链接</h3>
-        <p>https://www.nestfans.com/account/sign_up?invite=<%= @user.invite_code %></p>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-body" style="height: 180px;">
+            <div class="heading">邀请码</div>
+            <p style="font-size:24px"><%= @user.invite_code %></p>
+            <p style="font-size:15px">邀请链接</p>
+            <p>https://www.nestfans.com/account/sign_up?invite=<%= @user.invite_code %></p>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3" style="border-radius: 5px; background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);">
-        <h3>累计邀请</h3>
-        <p><%= @invitedCount %> 人</p>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body" style="height: 180px; text-align: center;">
+            <div class="heading">累计邀请</div>
+            <p style="font-size:24px; margin-top: 40px;"><%= @invitedCount %> 人</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <table class="table table-bordered table-striped table-condensed">
-      <tr class="head">
-        <td>帐号</td>
-        <td>Email</td>
-        <td>注册时间</td>
+  <table class="table table-bordered table-striped table-condensed">
+    <tr class="head">
+      <td>帐号</td>
+      <td>Email</td>
+      <td>注册时间</td>
+    </tr>
+    <% @invitedUsers.each do |iuser| %>
+      <tr>
+        <td><%= iuser.login %></td>
+        <td><%= iuser.email %></td>
+        <td><%= iuser.current_sign_in_at %></td>
       </tr>
-      <% @invitedUsers.each do |iuser| %>
-        <tr>
-          <td><%= iuser.login %></td>
-          <td><%= iuser.email %></td>
-          <td><%= iuser.current_sign_in_at %></td>
-        </tr>
-      <% end %>
-    </table>
-    <%= paginate @invitedUsers %>
+    <% end %>
+  </table>
+  <%= paginate @invitedUsers %>
   </div>
 
 </div>
