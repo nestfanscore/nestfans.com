@@ -1,5 +1,96 @@
 <% title_tag t("users.register_user") %>
 
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    var gtHandler = function(captchaObj) {
+        captchaObj
+        .onReady(function() {
+          console.log("gee on ready...");
+          $('#send-email-code-btn').click(function() {
+            $('#new_user .alert').remove();
+            var email = $('#user_email').val();
+            var pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if (pattern.test(email) === false) {
+              $('#new_user').prepend("<div class='alert alert-block alert-danger'>\n<a class='close' data-dismiss='alert' href='#''>×<\/a>\n<div><strong>请先输入正确的邮箱地址<\/strong><\/div><\/div>\n");
+              return;
+            }
+
+            captchaObj.verify();
+          });
+        }).onSuccess(function() {
+          console.log("gee ready success");
+          var result = captchaObj.getValidate();
+          if (!result) {
+            return alert('请完成验证');
+          }
+          var email = $('#user_email').val();
+          $.ajax({
+            url: '/geetest/validate',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+              geetest_challenge: result.geetest_challenge,
+              geetest_validate: result.geetest_validate,
+              geetest_seccode: result.geetest_seccode,
+              geetest_key: email
+            },
+            success: function(data) {
+              if (data.status === 'success') {
+                console.log(email);
+                $.post("/application/send_email_verification_code", {
+                  email: email
+                });
+                var downTime = 60;
+                var btn = $('#send-email-code-btn');
+                var textBackup = btn.text();
+                var addDownText = function(downTime) {
+                  btn.text(downTime + ' 秒后重试');
+                };
+                btn.attr('disabled', true);
+                addDownText(downTime);
+                var interval = setInterval((function() {
+                  if (downTime === 0) {
+                    clearInterval(interval);
+                    btn.attr('disabled', false);
+                    btn.text(textBackup);
+                  } else {
+                    downTime = downTime - 1;
+                    addDownText(downTime);
+                  }
+                }), 1000);
+              } else if (data.status === 'fail') {
+                setTimeout((function() {
+                  captchaObj.reset();
+                }), 1000);
+              }
+            }
+          });
+        }).onError(function(e) {
+          console.log("gee ready error", e);
+        });
+    };
+
+    $.ajax({
+      url: '/geetest/preprocess?t=' + (new Date).getTime(),
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        console.log(data);
+        initGeetest({
+          gt: data.gt,
+          challenge: data.challenge,
+          new_captcha: data.new_captcha,
+          offline: !data.success,
+          product: 'bind',
+          timeout: '3000',
+          width: '300px',
+          https: true
+        }, gtHandler);
+      }
+    });
+  </script>
+<% end %>
+
 <div class="row">
   <div class="col"></div>
   <div class="col-lg-6">
