@@ -88,6 +88,20 @@
         }, gtHandler);
       }
     });
+
+    var getUrlParam = function(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+      var r = window.location.search.substr(1).match(reg);
+      if (r !== null) {
+        return unescape(r[2]);
+      }
+      return null;
+    };
+
+    var invite_code = getUrlParam("invite");
+    if (invite_code) {
+      $('#user_invite_by').val(invite_code);
+    }
   </script>
 <% end %>
 

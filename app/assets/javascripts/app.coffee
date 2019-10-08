@@ -54,7 +54,6 @@ AppView = Backbone.View.extend
     @initInfiniteScroll()
     @initCable()
     @restoreHeaderSearchBox()
-    @initInvite()
 
     if $('body').data('controller-name') in ['topics', 'replies']
       window._topicView = new TopicView({parentView: @})
@@ -268,22 +267,6 @@ AppView = Backbone.View.extend
     currentSrc = img.attr('src')
     img.attr('src', currentSrc.split('?')[0] + '?' + (new Date()).getTime())
     return false
-
-  initInvite: ->
-    getUrlParam = (name) ->
-      reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
-      r = window.location.search.substr(1).match(reg)
-
-      if r != null
-        return unescape(r[2])
-      null
-
-    location = window.location
-    if location.pathname == "/account/sign_up"
-      invite_code = getUrlParam("invite")
-
-      if invite_code
-        $('#user_invite_by').val(invite_code)
 
   updateWindowActiveState: (e) ->
     prevType = $(this).data("prevType")
