@@ -13,20 +13,6 @@ log_format timed_combined '$remote_addr - $remote_user [$time_local] '
                           '$request_time $upstream_response_time $pipe';
 
 server {
-  listen 80;
-
-  <% if ENV['https'] == "true" || ENV["https"] == "1" %>
-  include /etc/nginx/ssl.conf;
-  <% end %>
-
-  server_name nestpool.io;
-
-  location / {
-    proxy_pass http://nestfans.com:18880;
-  }
-}
-
-server {
   listen 80 default_server;
 
   <% if ENV['https'] == "true" || ENV["https"] == "1" %>
@@ -179,5 +165,19 @@ server {
     proxy_set_header   X-Forwarded-Proto $scheme;
     proxy_pass         http://app_backend;
     gzip on;
+  }
+}
+
+server {
+  listen 80;
+
+  <% if ENV['https'] == "true" || ENV["https"] == "1" %>
+  include /etc/nginx/ssl.conf;
+  <% end %>
+
+  server_name nestpool.io;
+
+  location / {
+    proxy_pass http://nestfans.com:18880;
   }
 }
