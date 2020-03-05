@@ -167,3 +167,17 @@ server {
     gzip on;
   }
 }
+
+server {
+  listen 80;
+
+  <% if ENV['https'] == "true" || ENV["https"] == "1" %>
+  include /etc/nginx/ssl.conf;
+  <% end %>
+
+  server_name nestpool.io;
+
+  location / {
+    proxy_pass http://127.0.0.1:18880;
+  }
+}
