@@ -311,7 +311,7 @@ GEM
       mime-types (~> 3.1)
       rest-client (~> 2.0)
     raabro (1.1.6)
-    rack (2.0.7)
+    rack (2.2.3)
     rack-attack (5.4.2)
       rack (>= 1.0, < 3)
     rack-cors (1.0.2)
